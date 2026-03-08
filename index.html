@@ -232,8 +232,12 @@ body{font-family:'Baloo 2',sans-serif;background:var(--navy);min-height:100vh;co
 const CDN = "https://everyayah.com/data/Alafasy_64kbps/";
 // Offset: global ayah number before this surah starts
 const OFF = {1:0, 108:6204, 112:6221, 113:6225, 114:6230};
-function pad(n){ return String(n).padStart(3,'0'); }
-function aurl(surah, verse){
+function pad(n){
+  return String(n).padStart(3,'0');
+}
+
+function aurl(surah, verseIndex){
+  const verse = verseIndex + 1;
   return CDN + pad(surah) + pad(verse) + ".mp3";
 }
 
@@ -386,7 +390,7 @@ function playVerse(surahNum, vi) {
   autoOn = false; autoIdx = vi;
   const s = SURAHS.find(x => x.num === surahNum);
   const v = s.verses[vi];
-  const url = aurl(surahNum, vi+1);
+  const url = aurl(surahNum, vi);
   loadVerse(url, `Verset ${vi+1} · ${v.fr.slice(0,38)}…`, null);
   highlightVerse(vi);
   A().play().catch(() => {});
@@ -394,7 +398,7 @@ function playVerse(surahNum, vi) {
 
 function playAll() {
   const s = SURAHS.find(x => x.id === curId);
-  autoUrls  = s.verses.map((_,i) => aurl(s.num, i+1));
+  autoUrls  = s.verses.map((_,i) => aurl(s.num, i));
   autoLabels = s.verses.map((_,i) => `Verset ${i+1} / ${s.verses.length} · ${s.verses[i].fr.slice(0,28)}…`);
   autoIdx = 0; autoOn = true;
 
