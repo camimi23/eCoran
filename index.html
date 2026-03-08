@@ -229,10 +229,13 @@ body{font-family:'Baloo 2',sans-serif;background:var(--navy);min-height:100vh;co
 // Format: cdn.alquran.cloud/media/audio/ayah/ar.alafasy/{N}
 // N = global ayah number in full Quran
 // ═════════════════════════════════════════════════════════
-const CDN = 'https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/'; // direct mp3 base
+const CDN = "https://everyayah.com/data/Alafasy_64kbps/";
 // Offset: global ayah number before this surah starts
 const OFF = {1:0, 108:6204, 112:6221, 113:6225, 114:6230};
-function aurl(surah, v1) { return CDN + (OFF[surah] + v1) + '.mp3'; }
+function pad(n){ return String(n).padStart(3,'0'); }
+function aurl(surah, verse){
+  return CDN + pad(surah) + pad(verse) + ".mp3";
+}
 
 // ═════════════════════════════════════════════════════════
 // DATA
@@ -312,34 +315,34 @@ const SURAHS = [
 
 // Alphabet — each letter maps to a hardcoded CDN audio URL
 const ALPHA = [
-  {ar:"أ",n:"Alif",s:"a",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1.mp3"},
-  {ar:"ب",n:"Ba",s:"b",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1.mp3"},
-  {ar:"ت",n:"Ta",s:"t",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6205.mp3"},
-  {ar:"ث",n:"Tha",s:"th",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6225.mp3"},
-  {ar:"ج",n:"Jeem",s:"dj",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6235.mp3"},
-  {ar:"ح",n:"Ha",s:"ḥ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6222.mp3"},
-  {ar:"خ",n:"Kha",s:"kh",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6234.mp3"},
-  {ar:"د",n:"Dal",s:"d",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/3.mp3"},
-  {ar:"ذ",n:"Dhal",s:"dh",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7.mp3"},
-  {ar:"ر",n:"Ra",s:"r",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1.mp3"},
-  {ar:"ز",n:"Zay",s:"z",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6223.mp3"},
-  {ar:"س",n:"Seen",s:"s",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/5.mp3"},
-  {ar:"ش",n:"Sheen",s:"ch",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6229.mp3"},
-  {ar:"ص",n:"Sad",s:"ṣ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/5.mp3"},
-  {ar:"ض",n:"Dad",s:"ḍ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6.mp3"},
-  {ar:"ط",n:"Ta emp.",s:"ṭ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6.mp3"},
-  {ar:"ظ",n:"Dha",s:"ẓ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7.mp3"},
-  {ar:"ع",n:"Ain",s:"ʿ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1.mp3"},
-  {ar:"غ",n:"Ghain",s:"gh",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7.mp3"},
-  {ar:"ف",n:"Fa",s:"f",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1.mp3"},
-  {ar:"ق",n:"Qaf",s:"q",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6222.mp3"},
-  {ar:"ك",n:"Kaf",s:"k",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6205.mp3"},
-  {ar:"ل",n:"Lam",s:"l",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6224.mp3"},
-  {ar:"م",n:"Meem",s:"m",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6223.mp3"},
-  {ar:"ن",n:"Noon",s:"n",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6231.mp3"},
-  {ar:"ه",n:"Ha",s:"h",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6222.mp3"},
-  {ar:"و",n:"Waw",s:"w",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6206.mp3"},
-  {ar:"ي",n:"Ya",s:"y",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/2.mp3"}
+  {ar:"أ",n:"Alif",s:"a",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
+  {ar:"ب",n:"Ba",s:"b",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
+  {ar:"ت",n:"Ta",s:"t",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6205"},
+  {ar:"ث",n:"Tha",s:"th",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6225"},
+  {ar:"ج",n:"Jeem",s:"dj",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6235"},
+  {ar:"ح",n:"Ha",s:"ḥ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6222"},
+  {ar:"خ",n:"Kha",s:"kh",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6234"},
+  {ar:"د",n:"Dal",s:"d",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/3"},
+  {ar:"ذ",n:"Dhal",s:"dh",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7"},
+  {ar:"ر",n:"Ra",s:"r",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
+  {ar:"ز",n:"Zay",s:"z",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6223"},
+  {ar:"س",n:"Seen",s:"s",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/5"},
+  {ar:"ش",n:"Sheen",s:"ch",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6229"},
+  {ar:"ص",n:"Sad",s:"ṣ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/5"},
+  {ar:"ض",n:"Dad",s:"ḍ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6"},
+  {ar:"ط",n:"Ta emp.",s:"ṭ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6"},
+  {ar:"ظ",n:"Dha",s:"ẓ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7"},
+  {ar:"ع",n:"Ain",s:"ʿ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
+  {ar:"غ",n:"Ghain",s:"gh",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7"},
+  {ar:"ف",n:"Fa",s:"f",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
+  {ar:"ق",n:"Qaf",s:"q",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6222"},
+  {ar:"ك",n:"Kaf",s:"k",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6205"},
+  {ar:"ل",n:"Lam",s:"l",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6224"},
+  {ar:"م",n:"Meem",s:"m",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6223"},
+  {ar:"ن",n:"Noon",s:"n",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6231"},
+  {ar:"ه",n:"Ha",s:"h",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6222"},
+  {ar:"و",n:"Waw",s:"w",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6206"},
+  {ar:"ي",n:"Ya",s:"y",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/2"}
 ];
 
 const TIPS = [
