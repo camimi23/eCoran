@@ -178,11 +178,6 @@ body{font-family:'Baloo 2',sans-serif;background:var(--navy);min-height:100vh;co
     <button class="btn-pa" onclick="playAll()">▶▶ Écouter toute la sourate en continu</button>
     <div class="vlist" id="vlist"></div>
   </div>
-  <div id="bism" class="bism">
-    <span class="bism-ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
-    <div class="bism-ph">Bismi llāhi r-raḥmāni r-raḥīm</div>
-    <div class="bism-fr">Au nom d'Allah, le Tout Miséricordieux, le Très Miséricordieux</div>
-  </div>
   <div class="vcards" id="vcards"></div>
   <div class="btnrow">
     <button class="btn btn-grn" onclick="startSQ()">🎯 Quiz sur cette sourate</button>
@@ -232,12 +227,8 @@ body{font-family:'Baloo 2',sans-serif;background:var(--navy);min-height:100vh;co
 const CDN = "https://everyayah.com/data/Alafasy_64kbps/";
 // Offset: global ayah number before this surah starts
 const OFF = {1:0, 108:6204, 112:6221, 113:6225, 114:6230};
-function pad(n){
-  return String(n).padStart(3,'0');
-}
-
-function aurl(surah, verseIndex){
-  const verse = verseIndex + 1;
+function pad(n){ return String(n).padStart(3,'0'); }
+function aurl(surah, verse){
   return CDN + pad(surah) + pad(verse) + ".mp3";
 }
 
@@ -245,9 +236,11 @@ function aurl(surah, verseIndex){
 // DATA
 // ═════════════════════════════════════════════════════════
 const SURAHS = [
-  {id:1,num:1,ar:"الفاتحة",fr:"L'Ouverture (Al-Fatiha)",v:7,
+  {id:1,num:1,ar:"الفاتحة",fr:"L'Ouverture (Al-Fatiha)",v:8,
    info:"1ʳᵉ sourate · Récitée dans chaque prière · 7 versets",
    verses:[
+    {ar:"بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",ph:"Bismi llāhi r-raḥmāni r-raḥīm",fr:"Au nom d'Allah, le Tout Miséricordieux, le Très Miséricordieux",
+     w:[{ar:"بِسْمِ",ph:"bismi",fr:"au nom"},{ar:"اللَّهِ",ph:"llāhi",fr:"d'Allah"},{ar:"الرَّحْمَٰنِ",ph:"r-raḥmān",fr:"Tout Miséricordieux"},{ar:"الرَّحِيمِ",ph:"r-raḥīm",fr:"Très Miséricordieux"}]},
     {ar:"الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",ph:"Al-ḥamdu li-llāhi rabbi l-ʿālamīn",fr:"Toute louange appartient à Allah, Seigneur des mondes",
      w:[{ar:"الْحَمْدُ",ph:"al-ḥamdu",fr:"la louange"},{ar:"لِلَّهِ",ph:"li-llāh",fr:"à Allah"},{ar:"رَبِّ",ph:"rabbi",fr:"Seigneur"},{ar:"الْعَالَمِينَ",ph:"l-ʿālamīn",fr:"des mondes"}]},
     {ar:"الرَّحْمَٰنِ الرَّحِيمِ",ph:"Ar-raḥmāni r-raḥīm",fr:"Le Tout Miséricordieux, le Très Miséricordieux",
@@ -371,11 +364,22 @@ let qData=[], qIdx=0, qScore=0;
 // ═════════════════════════════════════════════════════════
 function A(){ return document.getElementById('A'); }
 
-function loadVerse(url, label, onEndCb) {
+function loadAndPlay(url, label, onEndCb) {
   const a = A();
+  // Clear previous listeners to avoid stale callbacks
+  a.oncanplay = null;
+  a.onended = null;
+  a.pause();
+
+  document.getElementById('rec-label').textContent = label;
   a.src = url;
   a.load();
-  document.getElementById('rec-label').textContent = label;
+
+  // Play only once the new src is actually ready — fixes the N-1 lag
+  a.oncanplay = () => {
+    a.oncanplay = null;
+    a.play().catch(() => {});
+  };
   a.onended = onEndCb || null;
 }
 
@@ -390,34 +394,31 @@ function playVerse(surahNum, vi) {
   autoOn = false; autoIdx = vi;
   const s = SURAHS.find(x => x.num === surahNum);
   const v = s.verses[vi];
-  const url = aurl(surahNum, vi);
-  loadVerse(url, `Verset ${vi+1} · ${v.fr.slice(0,38)}…`, null);
+  const url = aurl(surahNum, vi+1);
   highlightVerse(vi);
-  A().play().catch(() => {});
+  loadAndPlay(url, `Verset ${vi+1} · ${v.fr.slice(0,38)}…`, null);
 }
 
 function playAll() {
   const s = SURAHS.find(x => x.id === curId);
-  autoUrls  = s.verses.map((_,i) => aurl(s.num, i));
+  autoUrls  = s.verses.map((_,i) => aurl(s.num, i+1));
   autoLabels = s.verses.map((_,i) => `Verset ${i+1} / ${s.verses.length} · ${s.verses[i].fr.slice(0,28)}…`);
   autoIdx = 0; autoOn = true;
 
   function playNext() {
+    if (!autoOn || autoIdx >= autoUrls.length) {
+      autoOn = false;
+      document.getElementById('rec-label').textContent = '✅ Lecture terminée';
+      document.querySelectorAll('.vli,.vc').forEach(el => el.classList.remove('on'));
+      return;
+    }
     highlightVerse(autoIdx);
-    loadVerse(autoUrls[autoIdx], autoLabels[autoIdx], () => {
+    loadAndPlay(autoUrls[autoIdx], autoLabels[autoIdx], () => {
       autoIdx++;
-      if (autoOn && autoIdx < autoUrls.length) {
-        playNext();
-        A().play().catch(() => {});
-      } else {
-        autoOn = false;
-        document.getElementById('rec-label').textContent = '✅ Lecture terminée';
-        document.querySelectorAll('.vli,.vc').forEach(el => el.classList.remove('on'));
-      }
+      playNext();
     });
   }
   playNext();
-  A().play().catch(() => {});
 }
 
 function stopAll() {
@@ -455,7 +456,6 @@ function openLesson(id) {
   document.getElementById('ltit').textContent = 'Sourate ' + s.num;
   document.getElementById('lar').textContent = s.ar;
   document.getElementById('lfr').textContent = s.fr;
-  document.getElementById('bism').style.display = s.num === 1 ? 'none' : 'block';
   document.getElementById('rec-label').textContent = 'Sélectionne un verset ↓ ou écoute tout';
 
   // Playlist
@@ -467,8 +467,15 @@ function openLesson(id) {
     vl.appendChild(item);
   });
 
-  // Detail cards
+  // Detail cards — Bismillah as first card for all surahs
   const vc = document.getElementById('vcards'); vc.innerHTML = '';
+  const bism = document.createElement('div');
+  bism.className = 'bism';
+  bism.innerHTML = `
+    <span class="bism-ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+    <div class="bism-ph">Bismi llāhi r-raḥmāni r-raḥīm</div>
+    <div class="bism-fr">Au nom d'Allah, le Tout Miséricordieux, le Très Miséricordieux</div>`;
+  vc.appendChild(bism);
   s.verses.forEach((v, i) => {
     const c = document.createElement('div'); c.className = 'vc'; c.id = 'vc-'+i;
     const chips = v.w.map(w =>
