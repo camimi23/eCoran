@@ -229,10 +229,10 @@ body{font-family:'Baloo 2',sans-serif;background:var(--navy);min-height:100vh;co
 // Format: cdn.alquran.cloud/media/audio/ayah/ar.alafasy/{N}
 // N = global ayah number in full Quran
 // ═════════════════════════════════════════════════════════
-const CDN = 'https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/';
+const CDN = 'https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/'; // direct mp3 base
 // Offset: global ayah number before this surah starts
 const OFF = {1:0, 108:6204, 112:6221, 113:6225, 114:6230};
-function aurl(surah, v1) { return CDN + (OFF[surah] + v1); }
+function aurl(surah, v1) { return CDN + (OFF[surah] + v1) + '.mp3'; }
 
 // ═════════════════════════════════════════════════════════
 // DATA
@@ -312,7 +312,7 @@ const SURAHS = [
 
 // Alphabet — each letter maps to a hardcoded CDN audio URL
 const ALPHA = [
-  {ar:"أ",n:"Alif",s:"a",url:"https://cdn.islamic.network/quran/audio/64/ar.alafasy/1.mp3"},
+  {ar:"أ",n:"Alif",s:"a",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1.mp3"},
   {ar:"ب",n:"Ba",s:"b",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1.mp3"},
   {ar:"ت",n:"Ta",s:"t",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6205.mp3"},
   {ar:"ث",n:"Tha",s:"th",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6225.mp3"},
