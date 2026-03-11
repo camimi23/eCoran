@@ -73,6 +73,8 @@ body{font-family:'Baloo 2',sans-serif;background:var(--navy);min-height:100vh;co
 .vn{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold3));display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;flex-shrink:0;margin-top:3px}
 .vtx{flex:1}
 .var{font-family:'Scheherazade New',serif;font-size:clamp(1.35rem,4vw,1.75rem);color:var(--cream);direction:rtl;text-align:right;line-height:1.8;display:block}
+.vword{display:inline;transition:color .12s,background .12s;border-radius:6px;padding:0 3px;cursor:default}
+.vword.lit{color:#1a1200;background:var(--gold);border-radius:6px;padding:0 5px;box-shadow:0 2px 12px rgba(232,184,75,.55)}
 .vph{font-size:.74rem;color:var(--gold2);opacity:.75;margin-top:4px;font-style:italic}
 .vfr{font-size:.74rem;opacity:.48;margin-top:3px;line-height:1.5}
 .vplay{width:32px;height:32px;border-radius:50%;background:rgba(232,184,75,.14);border:1px solid rgba(232,184,75,.3);color:var(--gold);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;margin-top:2px}
@@ -1218,34 +1220,34 @@ const SURAHS = [
 
 // Alphabet — each letter maps to a hardcoded CDN audio URL
 const ALPHA = [
-  {ar:"أ",n:"Alif",s:"a",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
-  {ar:"ب",n:"Ba",s:"b",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
-  {ar:"ت",n:"Ta",s:"t",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6205"},
-  {ar:"ث",n:"Tha",s:"th",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6225"},
-  {ar:"ج",n:"Jeem",s:"dj",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6235"},
-  {ar:"ح",n:"Ha",s:"ḥ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6222"},
-  {ar:"خ",n:"Kha",s:"kh",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6234"},
-  {ar:"د",n:"Dal",s:"d",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/3"},
-  {ar:"ذ",n:"Dhal",s:"dh",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7"},
-  {ar:"ر",n:"Ra",s:"r",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
-  {ar:"ز",n:"Zay",s:"z",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6223"},
-  {ar:"س",n:"Seen",s:"s",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/5"},
-  {ar:"ش",n:"Sheen",s:"ch",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6229"},
-  {ar:"ص",n:"Sad",s:"ṣ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/5"},
-  {ar:"ض",n:"Dad",s:"ḍ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6"},
-  {ar:"ط",n:"Ta emp.",s:"ṭ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6"},
-  {ar:"ظ",n:"Dha",s:"ẓ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7"},
-  {ar:"ع",n:"Ain",s:"ʿ",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
-  {ar:"غ",n:"Ghain",s:"gh",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/7"},
-  {ar:"ف",n:"Fa",s:"f",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/1"},
-  {ar:"ق",n:"Qaf",s:"q",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6222"},
-  {ar:"ك",n:"Kaf",s:"k",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6205"},
-  {ar:"ل",n:"Lam",s:"l",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6224"},
-  {ar:"م",n:"Meem",s:"m",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6223"},
-  {ar:"ن",n:"Noon",s:"n",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6231"},
-  {ar:"ه",n:"Ha",s:"h",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6222"},
-  {ar:"و",n:"Waw",s:"w",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/6206"},
-  {ar:"ي",n:"Ya",s:"y",url:"https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/2"}
+  {ar:"أ",n:"Alif",s:"a",url:"https://everyayah.com/data/Alafasy_64kbps/001001.mp3"},
+  {ar:"ب",n:"Ba",s:"b",url:"https://everyayah.com/data/Alafasy_64kbps/001001.mp3"},
+  {ar:"ت",n:"Ta",s:"t",url:"https://everyayah.com/data/Alafasy_64kbps/108001.mp3"},
+  {ar:"ث",n:"Tha",s:"th",url:"https://everyayah.com/data/Alafasy_64kbps/113001.mp3"},
+  {ar:"ج",n:"Jeem",s:"dj",url:"https://everyayah.com/data/Alafasy_64kbps/114003.mp3"},
+  {ar:"ح",n:"Ha",s:"ḥ",url:"https://everyayah.com/data/Alafasy_64kbps/112001.mp3"},
+  {ar:"خ",n:"Kha",s:"kh",url:"https://everyayah.com/data/Alafasy_64kbps/114006.mp3"},
+  {ar:"د",n:"Dal",s:"d",url:"https://everyayah.com/data/Alafasy_64kbps/112002.mp3"},
+  {ar:"ذ",n:"Dhal",s:"dh",url:"https://everyayah.com/data/Alafasy_64kbps/114004.mp3"},
+  {ar:"ر",n:"Ra",s:"r",url:"https://everyayah.com/data/Alafasy_64kbps/112001.mp3"},
+  {ar:"ز",n:"Zay",s:"z",url:"https://everyayah.com/data/Alafasy_64kbps/112003.mp3"},
+  {ar:"س",n:"Seen",s:"s",url:"https://everyayah.com/data/Alafasy_64kbps/112001.mp3"},
+  {ar:"ش",n:"Sheen",s:"ch",url:"https://everyayah.com/data/Alafasy_64kbps/114005.mp3"},
+  {ar:"ص",n:"Sad",s:"ṣ",url:"https://everyayah.com/data/Alafasy_64kbps/112001.mp3"},
+  {ar:"ض",n:"Dad",s:"ḍ",url:"https://everyayah.com/data/Alafasy_64kbps/001007.mp3"},
+  {ar:"ط",n:"Ta emp.",s:"ṭ",url:"https://everyayah.com/data/Alafasy_64kbps/001006.mp3"},
+  {ar:"ظ",n:"Dha",s:"ẓ",url:"https://everyayah.com/data/Alafasy_64kbps/001007.mp3"},
+  {ar:"ع",n:"Ain",s:"ʿ",url:"https://everyayah.com/data/Alafasy_64kbps/001002.mp3"},
+  {ar:"غ",n:"Ghain",s:"gh",url:"https://everyayah.com/data/Alafasy_64kbps/001007.mp3"},
+  {ar:"ف",n:"Fa",s:"f",url:"https://everyayah.com/data/Alafasy_64kbps/108002.mp3"},
+  {ar:"ق",n:"Qaf",s:"q",url:"https://everyayah.com/data/Alafasy_64kbps/112001.mp3"},
+  {ar:"ك",n:"Kaf",s:"k",url:"https://everyayah.com/data/Alafasy_64kbps/108003.mp3"},
+  {ar:"ل",n:"Lam",s:"l",url:"https://everyayah.com/data/Alafasy_64kbps/112004.mp3"},
+  {ar:"م",n:"Meem",s:"m",url:"https://everyayah.com/data/Alafasy_64kbps/112003.mp3"},
+  {ar:"ن",n:"Noon",s:"n",url:"https://everyayah.com/data/Alafasy_64kbps/114001.mp3"},
+  {ar:"ه",n:"Ha",s:"h",url:"https://everyayah.com/data/Alafasy_64kbps/112001.mp3"},
+  {ar:"و",n:"Waw",s:"w",url:"https://everyayah.com/data/Alafasy_64kbps/108001.mp3"},
+  {ar:"ي",n:"Ya",s:"y",url:"https://everyayah.com/data/Alafasy_64kbps/114002.mp3"},
 ];
 
 const TIPS = [
@@ -1261,6 +1263,50 @@ const TIPS = [
 // ═════════════════════════════════════════════════════════
 let stars=0, curId=null, autoOn=false, autoIdx=0, autoUrls=[], autoLabels=[];
 let qData=[], qIdx=0, qScore=0;
+// Karaoke state
+let karaokeVerseIdx = -1, karaokeWords = [], karaokeWordIdx = -1;
+
+// ═════════════════════════════════════════════════════════
+// KARAOKE — word-by-word highlight via audio.timeupdate
+// Strategy: divide verse duration equally among words,
+// then highlight current word based on playback position.
+// ═════════════════════════════════════════════════════════
+function clearKaraoke() {
+  document.querySelectorAll('.vword.lit').forEach(el => el.classList.remove('lit'));
+  karaokeVerseIdx = -1; karaokeWords = []; karaokeWordIdx = -1;
+}
+
+function startKaraoke(vi, numWords) {
+  clearKaraoke();
+  karaokeVerseIdx = vi;
+  karaokeWords = numWords;
+  karaokeWordIdx = -1;
+}
+
+function onAudioTimeUpdate() {
+  if (karaokeVerseIdx < 0 || karaokeWords < 1) return;
+  const a = A();
+  if (!a.duration || a.duration === Infinity) return;
+  const ratio = a.currentTime / a.duration;
+  const wordIdx = Math.min(Math.floor(ratio * karaokeWords), karaokeWords - 1);
+  if (wordIdx === karaokeWordIdx) return; // no change
+  karaokeWordIdx = wordIdx;
+  // Remove previous highlight
+  document.querySelectorAll('.vword.lit').forEach(el => el.classList.remove('lit'));
+  // Highlight current word in the active verse
+  const spans = document.querySelectorAll(`.vword[data-vi="${karaokeVerseIdx}"]`);
+  if (spans[wordIdx]) {
+    spans[wordIdx].classList.add('lit');
+    // Also highlight matching chip in wpanel if open
+    const panel = document.querySelector(`#vc-${karaokeVerseIdx} .wpanel`);
+    if (panel && panel.classList.contains('open')) {
+      panel.querySelectorAll('.wchip').forEach((ch, i) => {
+        ch.style.background = i === wordIdx ? 'rgba(232,184,75,.35)' : '';
+        ch.style.borderColor = i === wordIdx ? 'var(--gold)' : '';
+      });
+    }
+  }
+}
 
 // ═════════════════════════════════════════════════════════
 // AUDIO ENGINE
@@ -1280,6 +1326,12 @@ function loadAndPlay(url, label, onEndCb) {
   document.getElementById('rec-label').textContent = label;
   a.src = url;
   a.load();
+
+  // Attach timeupdate once (guard against double-attach)
+  if (!a._karaokeHooked) {
+    a.addEventListener('timeupdate', onAudioTimeUpdate);
+    a._karaokeHooked = true;
+  }
 
   // Play only once the new src is actually ready — fixes the N-1 lag
   a.oncanplay = () => {
@@ -1302,7 +1354,8 @@ function playVerse(surahNum, vi) {
   const v = s.verses[vi];
   const url = aurl(surahNum, vi+1);
   highlightVerse(vi);
-  loadAndPlay(url, `Verset ${vi+1} · ${v.fr.slice(0,38)}…`, null);
+  startKaraoke(vi, v.w.length);
+  loadAndPlay(url, `Verset ${vi+1} · ${v.fr.slice(0,38)}…`, () => { clearKaraoke(); });
 }
 
 function playAll() {
@@ -1316,10 +1369,15 @@ function playAll() {
       autoOn = false;
       document.getElementById('rec-label').textContent = '✅ Lecture terminée';
       document.querySelectorAll('.vli,.vc').forEach(el => el.classList.remove('on'));
+      clearKaraoke();
       return;
     }
-    highlightVerse(autoIdx);
-    loadAndPlay(autoUrls[autoIdx], autoLabels[autoIdx], () => {
+    const vi = autoIdx;
+    const s = SURAHS.find(x => x.id === curId);
+    highlightVerse(vi);
+    startKaraoke(vi, s.verses[vi].w.length);
+    loadAndPlay(autoUrls[vi], autoLabels[vi], () => {
+      clearKaraoke();
       autoIdx++;
       playNext();
     });
@@ -1331,6 +1389,7 @@ function stopAll() {
   autoOn = false;
   const a = A(); a.pause(); a.src = ''; a.onended = null;
   document.querySelectorAll('.vli,.vc,.lcard').forEach(el => el.classList.remove('on'));
+  clearKaraoke();
 }
 
 // ═════════════════════════════════════════════════════════
@@ -1384,6 +1443,10 @@ function openLesson(id) {
   vc.appendChild(bism);
   s.verses.forEach((v, i) => {
     const c = document.createElement('div'); c.className = 'vc'; c.id = 'vc-'+i;
+    // Build per-word spans for karaoke highlighting
+    const wordSpans = v.w.map((w, wi) =>
+      `<span class="vword" data-vi="${i}" data-wi="${wi}">${w.ar}</span>`
+    ).join(' ');
     const chips = v.w.map(w =>
       `<div class="wchip"><span class="wcar">${w.ar}</span><span class="wcph">${w.ph}</span><span class="wcfr">${w.fr}</span></div>`
     ).join('');
@@ -1391,7 +1454,7 @@ function openLesson(id) {
       <div class="vctop">
         <div class="vn">${i+1}</div>
         <div class="vtx">
-          <span class="var">${v.ar}</span>
+          <span class="var">${wordSpans}</span>
           <div class="vph">🔤 ${v.ph}</div>
           <div class="vfr">🇫🇷 ${v.fr}</div>
         </div>
@@ -1420,9 +1483,17 @@ function buildLetters() {
     c.onclick = () => {
       document.querySelectorAll('.lcard').forEach(x => x.classList.remove('on'));
       c.classList.add('on');
-      const a = A(); a.src = l.url; a.load();
+      const a = A();
+      a.oncanplay = null;
+      a.onended = null;
+      a.pause();
+      a.src = l.url;
+      a.load();
+      a.oncanplay = () => {
+        a.oncanplay = null;
+        a.play().catch(() => { c.classList.remove('on'); });
+      };
       a.onended = () => c.classList.remove('on');
-      a.play().catch(() => { c.classList.remove('on'); });
     };
     g.appendChild(c);
   });
